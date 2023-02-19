@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
 import com.example.backend.config.security.PBKDF2Util;
-import com.example.backend.domain.system.user.Role;
-import com.example.backend.domain.system.user.RoleRepository;
+import com.example.backend.domain.system.role.Role;
+import com.example.backend.domain.system.role.RoleRepository;
 import com.example.backend.domain.system.user.User;
 import com.example.backend.domain.system.user.UserRepository;
 import com.example.backend.dto.UserDto;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

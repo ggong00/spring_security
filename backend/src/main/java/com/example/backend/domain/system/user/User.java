@@ -1,6 +1,7 @@
 package com.example.backend.domain.system.user;
 
 import com.example.backend.domain.CommonEntity;
+import com.example.backend.domain.system.role.Role;
 import com.example.backend.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -57,7 +58,7 @@ public class User extends CommonEntity implements UserDetails {
     @Column(nullable = true, length = -1, columnDefinition="text")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="role_id")
     private Role roles;
 
@@ -87,8 +88,9 @@ public class User extends CommonEntity implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(new SimpleGrantedAuthority(roles.getName()));
-        roles.getPrivileges().stream()
-                .map(p -> new SimpleGrantedAuthority(p.getName()))
+        roles.getPrivileges()
+                .stream()
+                .map(rp -> new SimpleGrantedAuthority(rp.getPrivilege().getName()))
                 .forEach(authorities::add);
 
         return authorities;

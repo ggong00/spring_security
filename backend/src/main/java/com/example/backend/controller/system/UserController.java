@@ -14,7 +14,7 @@ import java.security.spec.InvalidKeySpecException;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(
-        value = "/api/system/user",
+        value = "/api/system/users/",
         produces = "application/json"
 )
 public class UserController {
@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     // 회원가입
-    @PostMapping("/join")
+    @PostMapping("/signup")
     ResponseEntity<?> postSignUp(@Validated @RequestBody UserDto.SignUpReq req) throws NoSuchAlgorithmException, InvalidKeySpecException {
         UserDto.UserRes userRes = userService.createUser(req);
 

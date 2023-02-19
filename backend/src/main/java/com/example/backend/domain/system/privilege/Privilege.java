@@ -1,7 +1,9 @@
 package com.example.backend.domain.system.privilege;
 
-import com.example.backend.domain.system.user.Role;
+import com.example.backend.domain.system.role.Role;
+import com.example.backend.domain.system.role_privilege.RolePrivilege;
 import com.example.backend.dto.PrivilegeDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Builder
@@ -24,8 +27,9 @@ public class Privilege {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
-    private Collection<Role> roles;
+    @JsonIgnore
+    @OneToMany(mappedBy = "privilege", fetch = FetchType.LAZY)
+    private List<RolePrivilege> roles;
 
     public PrivilegeDto toPrivilegeDto(){
         return PrivilegeDto.builder()

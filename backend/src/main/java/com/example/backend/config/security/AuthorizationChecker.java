@@ -1,8 +1,9 @@
 package com.example.backend.config.security;
 
-import com.example.backend.domain.menu.Menu;
-import com.example.backend.domain.menu.MenuRepository;
-import com.example.backend.domain.system.user.Role;
+import com.example.backend.domain.system.menu.Menu;
+import com.example.backend.domain.system.menu.MenuRepository;
+import com.example.backend.domain.system.menu_role.MenuRole;
+import com.example.backend.domain.system.role.Role;
 import com.example.backend.domain.system.user.User;
 import com.example.backend.domain.system.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +62,7 @@ public class AuthorizationChecker {
         }
 
         // MENU_ROLE 이 NULL 이라면 모두 허용입니다.
-        List<Role> menuRoles = findMenu.getRoles();
+        List<MenuRole> menuRoles = findMenu.getRoles();
         if(menuRoles == null){
             return true;
         }
@@ -76,7 +77,7 @@ public class AuthorizationChecker {
         Role userRoles = signedUser.getRoles();
 
         boolean isContain = menuRoles.stream()
-                .map(Role::getId)
+                .map(menuRole -> menuRole.getRole().getId())
                 .anyMatch(userRoles.getId()::equals);
 
         if (!isContain) {

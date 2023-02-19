@@ -1,6 +1,7 @@
 package com.example.backend.config.security;
 
-import com.example.backend.dto.ResponseDto;
+import com.example.backend.dto.response.ResponseDto;
+import com.example.backend.dto.response.ResponseMsg;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public CustomAccessDeniedHandler() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         this.objectMapper = builder.build();
-        this.response403 = new ResponseDto.ResponseRes("now()", "access_denied", "access Denied.");
+        this.response403 = new ResponseDto.ResponseRes(ResponseMsg.ACCESS_DENIED);
     }
 
     @Override

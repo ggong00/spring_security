@@ -1,4 +1,4 @@
-package com.example.backend.domain.menu;
+package com.example.backend.domain.system.menu;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,7 @@
 package com.example.backend.config.security;
 
-import com.example.backend.dto.ResponseDto;
+import com.example.backend.dto.response.ResponseDto;
+import com.example.backend.dto.response.ResponseMsg;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -22,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public CustomAuthenticationSuccessHandler() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         this.objectMapper = builder.build();
-        this.responseLoginSuccess = new ResponseDto.ResponseRes("now()","login_success","로그인 성공.  status 값은 바꿔야함. 커스텀에러?");
+        this.responseLoginSuccess = new ResponseDto.ResponseRes(ResponseMsg.LOGIN_SUCCESS);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.backend.config.security.login;
 
 import com.example.backend.config.security.PBKDF2Util;
+import com.example.backend.domain.system.user.User;
 import com.example.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,12 +12,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class JsonAuthenticationManager implements AuthenticationManager {
 
@@ -25,11 +28,11 @@ public class JsonAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UserDetails userDetails = userService.loadUserByUsername((String) authentication.getPrincipal());//username
+        User user = userService.loadUserByUsername((String) authentication.getPrincipal());//username
         boolean validated = false;
 
         try {
-            validated = pbkdf2Util.validatePassword((String)authentication.getCredentials(), userDetails.getPassword());
+            validated = pbkdf2Util.validatePassword((String)authentication.getCredentials(), user.getPassword());
         } catch (NoSuchAlgorithmException e) {
             throw new BadCredentialsException("Not Found User");
         } catch (InvalidKeySpecException e) {
@@ -40,8 +43,8 @@ public class JsonAuthenticationManager implements AuthenticationManager {
             throw new BadCredentialsException("비밀번호 불일치.");
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails
-                , userDetails.getPassword()
-                , userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(user
+                , user.getPassword()
+                , user.getAuthorities());
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(
-        value = "/api",
+        value = "/api/system/privileges/",
         produces = "application/json"
 )
 public class PrivilegeController {

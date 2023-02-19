@@ -1,6 +1,7 @@
 package com.example.backend.config.security;
 
-import com.example.backend.dto.ResponseDto;
+import com.example.backend.dto.response.ResponseDto;
+import com.example.backend.dto.response.ResponseMsg;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -24,7 +25,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     public CustomAuthenticationFailureHandler() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         this.objectMapper = builder.build();
-        this.responseLoginFail = new ResponseDto.ResponseRes("now()","login_failed", "로그인 실패.  응답 규격?");
+        this.responseLoginFail = new ResponseDto.ResponseRes(ResponseMsg.FAIL);
     }
 
     @Override

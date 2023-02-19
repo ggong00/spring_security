@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-import com.example.backend.domain.system.user.Role;
+import com.example.backend.domain.system.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

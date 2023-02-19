@@ -1,6 +1,7 @@
 package com.example.backend.config.security;
 
-import com.example.backend.dto.ResponseDto;
+import com.example.backend.dto.response.ResponseDto;
+import com.example.backend.dto.response.ResponseMsg;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.core.AuthenticationException;
@@ -20,7 +21,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public CustomAuthenticationEntryPoint() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         this.objectMapper = builder.build();
-        this.response403 = new ResponseDto.ResponseRes("now()","unauthorized", "UnAuthorized");
+        this.response403 = new ResponseDto.ResponseRes(ResponseMsg.UN_AUTHORIZED);
     }
 
 

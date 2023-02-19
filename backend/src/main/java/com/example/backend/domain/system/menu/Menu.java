@@ -1,7 +1,7 @@
-package com.example.backend.domain.menu;
+package com.example.backend.domain.system.menu;
 
 import com.example.backend.domain.CommonEntity;
-import com.example.backend.domain.system.user.Role;
+import com.example.backend.domain.system.menu_role.MenuRole;
 import com.example.backend.dto.MenuDto;
 import lombok.*;
 import javax.persistence.*;
@@ -31,6 +31,9 @@ public class Menu extends CommonEntity {
     @JoinColumn(name = "parent")
     private Menu parent;
 
+    @Column(name = "group")
+    private Long group;
+
     @Column(name = "depth")
     private Long depth;
 
@@ -40,18 +43,14 @@ public class Menu extends CommonEntity {
     @Column(name = "ico")
     private String ico;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Menu> children = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "DIM_MENU_ROLE",
-            joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private List<Role> roles;
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private List<MenuRole> roles = new ArrayList<>();
 
     public MenuDto toMenuDto(){
+
         return MenuDto.builder()
                 .id(this.id)
                 .name(this.name)
@@ -59,8 +58,9 @@ public class Menu extends CommonEntity {
                 .seq(this.seq)
                 .ico(this.ico)
                 .depth(this.depth)
+                .group(this.group)
                 .children(this.children.stream().map(Menu::toMenuDto).collect(Collectors.toList()))
-                .roles(this.roles.stream().map(Role::toRoleDto).collect(Collectors.toList()))
+                .roles(this.roles.stream().map(menuRole -> menuRole.getRole().toRoleDto()).collect(Collectors.toList()))
                 .build();
     }
 }

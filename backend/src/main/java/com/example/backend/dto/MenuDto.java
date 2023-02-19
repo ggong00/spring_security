@@ -21,6 +21,7 @@ public class MenuDto {
     private Long seq;
     private String ico;
     private Long depth;
+    private Long group;
     private List<MenuDto> children;
     private List<RoleDto> roles;
 
@@ -31,6 +32,7 @@ public class MenuDto {
                 menu.getUrl(),
                 menu.getSeq(),
                 menu.getDepth(),
+                menu.getGroup(),
                 menu.getIco(),
                 Optional.ofNullable(menu.getChildren()).orElseGet(Collections::emptyList)
                         .stream().map(MenuDto::toMenuRes).collect(Collectors.toList())
@@ -46,6 +48,7 @@ public class MenuDto {
         private String url;
         private Long seq;
         private Long depth;
+        private Long parent;
         private String ico;
         private List<MenuRes> children;
 
